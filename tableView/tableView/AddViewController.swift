@@ -32,7 +32,13 @@ class AddViewController: UIViewController {
     }
     
     @IBAction func saveButtonAction(_ sender: Any) {
-        let identifier = (mode == .add) ? "exitSaveAddSegue" : "exitSaveEditSegue"
+        let identifier: String
+        switch mode {
+        case .add:
+            identifier = "exitSaveAddSegue"
+        case .edit:
+            identifier = "exitSaveEditSegue"
+        }
         performSegue(withIdentifier: identifier, sender: sender)
     }
     //textFieldが空あったらsaveボタンを押せなくする

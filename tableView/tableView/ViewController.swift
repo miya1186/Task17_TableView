@@ -95,19 +95,17 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     @IBAction func exitSaveAddSegue(segue:UIStoryboardSegue){
-        let addVC = segue.source as? AddViewController
-        if let addText = addVC?.addTextField.text{
-            fruitItems.append(Fruit(name:addText, isChecked:false))
-        }
+        guard let addVC = segue.source as? AddViewController else { return }
+        fruitItems.append(Fruit(name:addVC.addTextField.text ?? "", isChecked:false))
         tableView.reloadData()
     }
     
     @IBAction func exitSaveEditSegue(segue:UIStoryboardSegue){
-        if let addVC = segue.source as? AddViewController{
-            guard let fruitItemRow = fruitItemRow else { return }
-            fruitItems[fruitItemRow].name = addVC.addTextField.text ?? ""
-            let indexPath = IndexPath(item: fruitItemRow, section: 0)
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+        guard let addVC = segue.source as? AddViewController else { return }
+        guard let fruitItemRow = fruitItemRow else { return }
+        fruitItems[fruitItemRow].name = addVC.addTextField.text ?? ""
+        let indexPath = IndexPath(item: fruitItemRow, section: 0)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
 }
